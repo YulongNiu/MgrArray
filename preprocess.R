@@ -27,24 +27,24 @@ library('limma')
 
 load('/home/Yulong/RESEARCH/BaiLinhan_array/Process/normAveArray.RData')
 
-GPL9023Anno <- read.csv('/home/Yulong/RESEARCH/BaiLinhan_array/Process/GPL9023_anno.txt', sep = '\t', comment.char = '#', stringsAsFactor = FALSE)
+GPL9203Anno <- read.csv('/home/Yulong/RESEARCH/BaiLinhan_array/Process/GPL9203_anno.txt', sep = '\t', comment.char = '#', stringsAsFactor = FALSE)
 
 rawAnno <- normAveArray$genes
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~inter probes~~~~~~~~~~~~~~~~~~~~
 rawAnnoProbes <- rawAnno[, 'ProbeName']
-GPL9023AnnoProbes <- GPL9023Anno[, 'ID']
+GPL9203AnnoProbes <- GPL9203Anno[, 'ID']
 
-interProbes <- intersect(rawAnnoProbes, GPL9023AnnoProbes)
+interProbes <- intersect(rawAnnoProbes, GPL9203AnnoProbes)
 
-combineProbes <- cbind(GPL9023Anno[match(interProbes, GPL9023AnnoProbes), ],
+combineProbes <- cbind(GPL9203Anno[match(interProbes, GPL9203AnnoProbes), ],
               rawAnno[match(interProbes, rawAnnoProbes), ])
 
 sum(combineProbes[, 'SEQUENCE'] == combineProbes[, 'Sequence'])
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ##~~~~~~~~~~~~~~~~~~~~~~select Magnaporthe grisea~~~~~~~~~~~~~~~~~~~
-mgrP <- GPL9023Anno[GPL9023Anno[, 'ORGANISM'] == 'Magnaporthe grisea', 'ID']
+mgrP <- GPL9203Anno[GPL9203Anno[, 'ORGANISM'] == 'Magnaporthe grisea', 'ID']
 mgrPIdx <- match(mgrP, rownames(normAveArray$E))
 
 mgrArray <- cbind(normAveArray$E[mgrPIdx, ],
