@@ -7,7 +7,8 @@ filePaths <- dir(storePath)
 ## targets <- data.frame(SampleNumber = 1:length(filePaths),
 ##                       FileNamae = filePaths,
 ##                       Conditions = paste0('array', 1:length(filePaths)))
-rawArray <- read.maimages(filePaths, source = 'agilent', green.only = TRUE, path = storePath, names = paste0('array', 1:length(filePaths)))
+arrayNames <- c(paste0('YeastExtract', 1:3), paste0('Blank', 1:3), paste0('EucalyptusOil', 1:3), paste0('Chemical', 1:3))
+rawArray <- read.maimages(filePaths, source = 'agilent', green.only = TRUE, path = storePath, names = arrayNames)
 
 
 ## background correct
@@ -51,7 +52,4 @@ mgrArray <- cbind(normAveArray$E[mgrPIdx, ],
 
 write.csv(mgrArray, file = '/home/Yulong/RESEARCH/BaiLinhan_array/Process/mgrArray.csv')
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
 #######################################################################
