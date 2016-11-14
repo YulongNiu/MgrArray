@@ -29,6 +29,8 @@ load('/home/Yulong/RESEARCH/BaiLinhan_array/Process/normAveArray.RData')
 
 GPL9203Anno <- read.csv('/home/Yulong/RESEARCH/BaiLinhan_array/Process/GPL9203_anno.txt', sep = '\t', comment.char = '#', stringsAsFactor = FALSE)
 
+singleRaw <- read.csv('/home/Yulong/RESEARCH/BaiLinhan_array/Process/single_array_raw.csv', stringsAsFactor = FALSE)
+
 rawAnno <- normAveArray$genes
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~inter probes~~~~~~~~~~~~~~~~~~~~
@@ -47,9 +49,24 @@ sum(combineProbes[, 'SEQUENCE'] == combineProbes[, 'Sequence'])
 mgrP <- GPL9203Anno[GPL9203Anno[, 'ORGANISM'] == 'Magnaporthe grisea', 'ID']
 mgrPIdx <- match(mgrP, rownames(normAveArray$E))
 
-mgrArray <- cbind(normAveArray$E[mgrPIdx, ],
-                  normAveArray$genes[mgrPIdx, ])
+mgrArray <- normAveArray[mgrPIdx, ]
 
-write.csv(mgrArray, file = '/home/Yulong/RESEARCH/BaiLinhan_array/Process/mgrArray.csv')
+## add anotation
+mgrAddAnno <- singleRaw[match(mgrP, singleRaw[, 1]), 38:54]
+mgrArray$genes <- cbind(mgrArray$genes, mgrAddAnno)
+
+save(mgrArray, file = '/home/Yulong/RESEARCH/BaiLinhan_array/Process/mgrArray.RData')
+
+mgrArrayData <- cbind(mgrArray$E,
+                      mgrArray$genes)
+
+write.csv(mgrArrayData, file = '/home/Yulong/RESEARCH/BaiLinhan_array/Process/mgrArrayData.csv')
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #######################################################################
+
+
+########################KEGG ids######################################
+library('KEGGAPI')
+
+mgrIDs <- getProID('mgr')
+######################################################################
