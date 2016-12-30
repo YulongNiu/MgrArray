@@ -16,7 +16,7 @@ bgArray <- backgroundCorrect(rawArray, method = 'normexp', offset=50)
 
 ## normalization
 normArray <- normalizeBetweenArrays(bgArray, method = 'quantile')
-normAveArray <- avereps(normArray, ID=normArray$genes$ProbeName)
+normAveArray <- aver/home/Yulong/RESEARCH/NewRpkg/NCBIAPI/eps(normArray, ID=normArray$genes$ProbeName)
 
 save(normAveArray, file = '/home/Yulong/RESEARCH/BaiLinhan_array/Process/normAveArray.RData')
 ######################################################################
@@ -65,8 +65,4 @@ write.csv(mgrArrayData, file = '/home/Yulong/RESEARCH/BaiLinhan_array/Process/mg
 #######################################################################
 
 
-########################KEGG ids######################################
-library('KEGGAPI')
 
-mgrIDs <- getProID('mgr')
-######################################################################
